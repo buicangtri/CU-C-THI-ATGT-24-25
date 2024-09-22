@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUỘC THI TÌM HIỂU TRỰC TUYẾN PHÁP LUẬT VỀ AN TOÀN GIAO THÔNG</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .banner {
+            width: 100%;
+            max-height: 300px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .banner img {
+            width: 100%;
+            height: auto;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .instructions {
+            margin: 20px;
+            text-align: left;
+            font-size: 16px;
+        }
+        .test-link {
+            margin: 20px 0;
+        }
+        .test-link a {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .test-link a:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Banner Image -->
+    <div class="banner">
+        <img src="banner.png" alt="Banner Image">
+    </div>
+
+    <div class="container">
+        <!-- Page Title -->
+        <h1>CUỘC THI TÌM HIỂU TRỰC TUYẾN PHÁP LUẬT VỀ AN TOÀN GIAO THÔNG</h1>
+
+        <!-- Instructions Section -->
+        <div class="instructions">
+            <h3>HƯỚNG DẪN THAM GIA CUỘC THI</h3>
+            <p>1. Học sinh bấm vào nút "Tham gia thi tuần 1" hoặc "Tham gia thi tuần 2" để dự thi.</p>
+            <p>2. Nút tham gia thi sẽ dẫn đến một bài kiểm tra trên Google Form. Học sinh thực hiện 40 câu hỏi và bấm nút nộp bài.</p>
+            <p>3. Kết quả sẽ được tổng hợp tự động. 10 học sinh có điểm số cao nhất sẽ được cập nhật trên web vào 7h sáng mỗi ngày.</p>
+        </div>
+
+        <!-- Google Form Links -->
+        <div class="test-link">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuIN6kNF9WeJxMy62ephehjjxvKjeGXbq8eknQsKmc_11nTw/viewform?usp=sf_link" target="_blank">Tham gia thi tuần 1</a>
+            <a href="https://docs.google.com/forms/d/YOUR_FORM_ID_2/viewform" target="_blank">Tham gia thi tuần 2</a>
+        </div>
+
+        <!-- Top 10 Students Table for Week 1 -->
+        <h2>10 HỌC SINH CÓ ĐIỂM SỐ CAO NHẤT TUẦN 1</h2>
+        <table id="top-students-week1">
+            <thead>
+                <tr>
+                    <th>Hạng</th>
+                    <th>Họ và tên học sinh</th>
+                    <th>Lớp</th>
+                    <th>Điểm số</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table content will be populated by JavaScript -->
+            </tbody>
+        </table>
+
+        <!-- Top 10 Students Table for Week 2 -->
+        <h2>10 HỌC SINH CÓ ĐIỂM SỐ CAO NHẤT TUẦN 2</h2>
+        <table id="top-students-week2">
+            <thead>
+                <tr>
+                    <th>Hạng</th>
+                    <th>Họ và tên học sinh</th>
+                    <th>Lớp</th>
+                    <th>Điểm số</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table content will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // URLs for the JSON data (Google Apps Script web apps for each test)
+        const week1DataUrl = 'YOUR_GOOGLE_APPS_SCRIPT_URL_FOR_WEEK1';  // MODIFY THIS PART
+        const week2DataUrl = 'YOUR_GOOGLE_APPS_SCRIPT_URL_FOR_WEEK2';  // MODIFY THIS PART
+
+        // Function to fetch and display top 10 students for Week 1
+        function fetchWeek1Data() {
+            fetch(week1DataUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const tbodyWeek1 = document.querySelector('#top-students-week1 tbody');
+                    tbodyWeek1.innerHTML = '';  // Clear existing rows
+                    data.forEach((student, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${student.rank}</td><td>${student.name}</td><td>${student.class}</td><td>${student.score}</td>`;
+                        tbodyWeek1.appendChild(row);
+                    });
+                });
+        }
+
+        // Function to fetch and display top 10 students for Week 2
+        function fetchWeek2Data() {
+            fetch(week2DataUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const tbodyWeek2 = document.querySelector('#top-students-week2 tbody');
+                    tbodyWeek2.innerHTML = '';  // Clear existing rows
+                    data.forEach((student, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td>${student.rank}</td><td>${student.name}</td><td>${student.class}</td><td>${student.score}</td>`;
+                        tbodyWeek2.appendChild(row);
+                    });
+                });
+        }
+
+        // Fetch data when the page loads
+        fetchWeek1Data();
+        fetchWeek2Data();
+    </script>
+
+</body>
+</html>
